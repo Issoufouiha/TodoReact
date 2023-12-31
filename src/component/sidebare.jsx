@@ -10,12 +10,31 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import BasicTable from "./container";
 import PieChart from "./chartjs";
+import { useEffect, useState } from 'react';
 
 
 export default function Sidebare() {
+  const [categorie, setCategorie] = useState('');
+  const [titre, setTitre] = useState('');
+  const [date, setDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [status, setStatus] = useState('');
+  const data = {
+    cat : categorie,
+    title : titre,
+    date : date,
+    descrip : description,
+    myStatu : status,
+  }
+  let ArrrayData = [];
+  function addData() {
+    ArrrayData.push(data);
+    localStorage.setItem('Data', JSON.stringify(ArrrayData));
+  }
   return (
     <>
        <Box sx={{ display: 'flex' }}>
@@ -48,15 +67,24 @@ export default function Sidebare() {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   label="Age"
-                >
-                  <MenuItem value={10}>Academique</MenuItem>
-                  <MenuItem value={20}>extra-academique</MenuItem>
-                  <MenuItem value={30}>Distration</MenuItem>
+                  onChange={(e)=> setCategorie(e.target.value)}
+                  >
+                  <MenuItem value={'Academique'}>Academique</MenuItem>
+                  <MenuItem value={'extra-academique'}>extra-academique</MenuItem>
+                  <MenuItem value={'Distration'}>Distration</MenuItem>
                 </Select>
               </FormControl>
             </Box>
-            <TextField fullWidth id="outlined-basic" label="Titre" variant="outlined" margin="dense" />
-            <TextField fullWidth id="outlined-basic" label="Dates" variant="outlined" margin="dense" />
+            <TextField fullWidth id="outlined-basic"
+             label="Titre" variant="outlined"
+              margin="dense" 
+              onChange={(e)=> setTitre(e.target.value)}
+              />
+            <TextField fullWidth id="outlined-basic"
+             label="Dates" placeholder='12/12/2023'
+              variant="outlined" margin="dense"
+              onChange={(e)=> setDate(e.target.value)}
+               />
             <TextField
              fullWidth
              id="outlined-multiline-static"
@@ -64,8 +92,14 @@ export default function Sidebare() {
              multiline
              rows={5}
              margin="dense"
+             onChange={(e)=> setDescription(e.target.value)}
             />
-            <TextField fullWidth id="outlined-basic" label="Statue" variant="outlined" margin="dense" />
+            <TextField fullWidth id="outlined-basic"
+             label="Statue" variant="outlined"
+              margin="dense"
+              onChange={(e)=> setStatus(e.target.value)}
+               />
+            <Button onClick={()=>{addData()}} variant="contained">Ajouter</Button>
             <Box>
               <PieChart/>
             </Box>
