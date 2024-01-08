@@ -15,14 +15,15 @@ import Divider from '@mui/material/Divider';
 import BasicTable from "./container";
 import PieChart from "./chartjs";
 import { useEffect, useState } from 'react';
+import { getAllToDo } from '../utils/HandleApi';
 
 
 export default function Sidebare() {
-  const [categorie, setCategorie] = useState('');
-  const [titre, setTitre] = useState('');
-  const [date, setDate] = useState('');
-  const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('');
+  let [categorie, setCategorie] = useState('');
+  let [titre, setTitre] = useState('');
+  let [date, setDate] = useState('');
+  let [description, setDescription] = useState('');
+  let [status, setStatus] = useState('');
   const data = {
     cat : categorie,
     title : titre,
@@ -30,8 +31,11 @@ export default function Sidebare() {
     descrip : description,
     myStatu : status,
   }
+  useEffect(()=>{
+    getAllToDo(data)
+  },[])
   let ArrrayData = [];
-  function addData() {
+   function addData() {
     ArrrayData.push(data);
     localStorage.setItem('Data', JSON.stringify(ArrrayData));
   }
